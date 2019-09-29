@@ -199,7 +199,6 @@ parts/
 sdist/
 var/
 wheels/
-data/
 save/
 *.egg-info/
 .installed.cfg
