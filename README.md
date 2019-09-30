@@ -20,9 +20,13 @@ The *citations* of a person here is defined as the total number of his/her occur
 
 - Citations of the highest 30 people
 
+![Citations rank](./img/citations_rank.png)
+
 ### PageRank
 
 - PageRank scores of the highest 30 people
+
+![Pagerank scores rank](./img/pagerank_scores.png)
 
 ### Community Detection
 
@@ -33,6 +37,4 @@ The *citations* of a person here is defined as the total number of his/her occur
 - Social graph based on PageRank scores
 
 ![Social graph based on PageRank](./img/network_pagerank.png)
-
-
 
