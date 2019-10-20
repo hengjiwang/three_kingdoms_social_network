@@ -2,7 +2,7 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 from collections import defaultdict
 import regex as re
-from parse_chapter import parse_chapter, load_page, load_table
+from chapter_parser import parse_chapter, load_page, load_table
 import pandas as pd
 import sys
 
@@ -31,6 +31,8 @@ def build_graph(base_url, valid_names, start_chapter=1, end_chapter=120):
 
     for key in graph.keys():
         res.append((key[0], key[1], graph[key]))
+
+    res.sort(key=lambda x: x[2], reverse=True)
 
     return res
 
