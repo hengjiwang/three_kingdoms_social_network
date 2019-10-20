@@ -7,29 +7,34 @@
     <meta name="description" content="Visualization of statistics in Romance of Three Kingdoms characters">
     <title>Romance of Three Kingdoms Social Network</title>
     <link rel="shortcut icon" href="images/sanguo.ico" type="image/x-icon">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
 </head>
 
 <body>
     <header>
         <h1>Romance of Three Kingdoms Social Network</h1>
         <nav>
-            <label for="period">Period: </label>
-            <select id="period" name="period">
-                <option>All Periods</option>
-                <option>Yellow Turban Rebellion</option>
-                <option>Dong Zhuo in Power</option>
-                <option>Rivalry of Warlords</option>
-                <option>Battle of Guandu</option>
-                <option>Battle of Red Cliffs</option>
-                <option>Liu Bei's Era</option>
-                <option>Northern Expeditions</option>
-                <option>Post-Zhuge Era</option>
+            <div class="slt period">
+                <label for="period">Period: </label>
+                <input type="text" id="period" name="period" list="suggest-period">
+                <datalist id="suggest-period">
+                    <option>All Periods</option>
+                    <option>Yellow Turban Rebellion</option>
+                    <option>Dong Zhuo in Power</option>
+                    <option>Rivalry of Warlords</option>
+                    <option>Battle of Guandu</option>
+                    <option>Battle of Red Cliffs</option>
+                    <option>Liu Bei's Era</option>
+                    <option>Northern Expeditions</option>
+                    <option>Post-Zhuge Era</option>
+                </datalist>
+            </div>
 
-
-            </select>
-
-            <label for="people">People: </label>
-            <select id="people" name="people">
+            <div class="slt people">
+                <label for="people">People: </label>
+                <input type="text" id="people" name="people" list="suggest-people">
+                <datalist id="suggest-people">
                 <option>All People</option>
                 <optgroup label="Wei">
                     <option>Cao Cao</option>
@@ -46,23 +51,27 @@
                 <optgroup label="Other">
                     <option>Dong Zhuo</option>
                 </optgroup>
-            </select>
+            </datalist>
+            </div>
         </nav>
     </header>
 
     <main>
-        <article></article>
+        <article>I am an article</article>
         <aside class="legend">
-            <li class="h3 li" style="background-color: blue; color: white;">Wei</li>
-            <li class="h3 li" style="background-color: green; color: white;">Shu</li>
-            <li class="h3 li" style="background-color: red; color: white;">Wu</li>
-            <li class="h3 li" style="background-color: purple; color: white;">Jin</li>
-            <li class="h3 li" style="background-color: black; color: white;">Other</li>
-            </div>
-
+            <ul>
+                <li class="h3 li wei">Wei</li>
+                <li class="h3 li shu">Shu</li>
+                <li class="h3 li wu">Wu</li>
+                <li class="h3 li jin">Jin</li>
+                <li class="h3 li other">Other</li>
+            </ul>
+        </aside>
     </main>
-</body>
 
+    <footer>
+        I am a footer
+    </footer>
 </body>
 
 </html>

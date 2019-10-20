@@ -20,21 +20,20 @@ The *citations* of a person here is defined as the total number of his/her occur
 
 - Citations of the highest 50 people
 
-![Citations rank](./img/citations_rank.png)
+![Citations rank](./scrape_wikipedia/img/citations_rank.png)
 
 ### PageRank
 
 - PageRank scores of the highest 50 people
 
-![Pagerank scores rank](./img/pagerank_scores.png)
+![Pagerank scores rank](./scrape_wikipedia/img/pagerank_scores.png)
 
 ### Community Detection
 
 - Social graph based on citations
 
-![Social graph based on citations](./img/network_citations.png)
+![Social graph based on citations](./scrape_wikipedia/img/network_citations.png)
 
 - Social graph based on PageRank scores
 
-![Social graph based on PageRank](./img/network_pagerank.png)
-
+![Social graph based on PageRank](./scrape_wikipedia/img/network_pagerank.png)
