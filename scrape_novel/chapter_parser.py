@@ -16,7 +16,7 @@ def load_table(people_file):
     df = pd.read_csv(people_file)
     lnames = df['name_en'].values
     new_names = np.array(['Emperor Xian', 'Diao Chan', 'Yue Jing', 'Zhang Ba', 'Zhang Jue', 'Zhang Lian',
-    'Zhao Zilong', 'Lu Bu', 'Lu Meng', 'Lu Qian'])
+    'Zhao Zilong', 'Lu Bu', 'Lu Meng', 'Lu Qian', 'Hu Ban', 'Gao Ding', 'Zhou Cang', 'The Emperor'])
     lnames = np.concatenate((lnames, new_names))
     for name in lnames:  names[name] = True
 
@@ -40,13 +40,15 @@ def find_name(p):
     '''
     :param p: Text of a paragraph
     :type p: str
-    :return: Names appear in p
-    :rtype: set
+    :return: Names appear in p; unique and all
+    :rtype: set, list
     '''
     names = set()
+    all_names = []
     for x in re.findall(r'[A-Z][a-z]*[\s][A-Z][a-z]*', p, overlapped=True):
-        names.add(x)    
-    return names
+        names.add(x)   
+        all_names.append(x)
+    return names, all_names
 
 def add_edges(g, names):
     '''
@@ -77,26 +79,40 @@ def drop_names(g, valid_names):
         if pair[0] not in valid_names or pair[1] not in valid_names:
             del g[pair]
 
+def drop_counts(c, valid_names):
+    '''
+    :rtype: None
+    '''
+    keys = list(c.keys())
+    for key in keys:
+        if key not in valid_names:
+            del c[key]
+
 
 def parse_chapter(url, valid_names):
     '''
     :param url: URL of the target chapter
     :type url: str
-    :return: graph of the people appeared in this chapter
-    :rtype: defaultdict
+    :return: graph of the people appeared in this chapter; the appearance count for each person
+    :rtype: defaultdict, defaultdict
     '''
     bs = load_page(url)
     graph = defaultdict(lambda:0)
+    count = defaultdict(lambda:0)
 
     paragraphs = bs.find('table',{'id':'txt_content'}).find_all('td', {'class': "1"})
     for p in paragraphs:
-        names = find_name(p.text)
+        names, all_names = find_name(p.text)
         if len(names) > 1:
             add_edges(graph, names)
+        for name in all_names:
+            count[name] += 1
 
     drop_names(graph, valid_names)
+    drop_counts(count, valid_names)
 
-    return graph
+
+    return graph, count
 
 if __name__ == "__main__":
     valid_names = load_table("./data/people.csv")
