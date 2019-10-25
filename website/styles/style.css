@@ -58,6 +58,14 @@ main aside ul {
     line-height: 30px;
 }
 
+main aside ul li {
+    display: block;
+    border: 2px ridge white;
+    border-radius: 10%;
+    margin-bottom: 2%;
+    transition: all 0.5s;
+}
+
 main aside ul li.wei {
     background-color: blue;
 }
@@ -76,6 +84,15 @@ main aside ul li.jin {
 
 main aside ul li.other {
     background-color: black;
+}
+
+main aside ul li:hover {
+    /* width: 200px; */
+    /* background-color: orange;
+    color: black; */
+    font-weight: bold;
+    font-style: italic;
+    transform: scale(1.2, 1.2);
 }
 
 footer {

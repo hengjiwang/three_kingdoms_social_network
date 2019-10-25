@@ -17,18 +17,18 @@
         <nav>
             <div class="slt period">
                 <label for="period">Period: </label>
-                <input type="text" id="period" name="period" list="suggest-period">
-                <datalist id="suggest-period">
-                    <option>All Periods</option>
-                    <option>Yellow Turban Rebellion</option>
-                    <option>Dong Zhuo in Power</option>
-                    <option>Rivalry of Warlords</option>
-                    <option>Battle of Guandu</option>
-                    <option>Battle of Red Cliffs</option>
-                    <option>Liu Bei's Era</option>
-                    <option>Northern Expeditions</option>
-                    <option>Post-Zhuge Era</option>
-                </datalist>
+                <!-- <input type="text" id="period" name="period" list="suggest-period"> -->
+                <select id="period" name="period">
+                    <option value="all-periods" selected>All Periods</option>
+                    <option value="yellow-turban-rebellion">Yellow Turban Rebellion</option>
+                    <option value="dong-zhuo-in-power">Dong Zhuo in Power</option>
+                    <option value="rivalry-of-warlords">Rivalry of Warlords</option>
+                    <option value="battle-of-guandu">Battle of Guandu</option>
+                    <option value="battle-of-red-cliffs">Battle of Red Cliffs</option>
+                    <option value="liu-bei's-era">Liu Bei's Era</option>
+                    <option value="northern-expeditions">Northern Expeditions</option>
+                    <option value="post-zhuge-era">Post-Zhuge Era</option>
+                </select>
             </div>
 
             <div class="slt people">
@@ -57,7 +57,9 @@
     </header>
 
     <main>
-        <article>I am an article</article>
+        <article>
+            <div class="main-intro">all-periods</div>
+        </article>
         <aside class="legend">
             <ul>
                 <li class="h3 li wei">Wei</li>
@@ -72,6 +74,7 @@
     <footer>
         I am a footer
     </footer>
+    <script src="scripts/main.js"></script>
 </body>
 
 </html>
