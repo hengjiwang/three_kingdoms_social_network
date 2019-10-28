@@ -4,7 +4,7 @@ body {
     margin: 0 auto;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
-    background-image: url(../images/thr-bkg.jpg);
+    /* background-image: url(../images/thr-bkg.jpg); */
 }
 
 header {
