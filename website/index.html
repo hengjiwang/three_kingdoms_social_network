@@ -62,7 +62,7 @@
 
     <main>
         <article>
-            <div id="profile">
+            <div class="profile" id="profile">
                 <p id="all-periods">On and on the Great River rolls, racing east.</br>
                     Of proud and gallant heroes its white-tops leave no trace,</br>
                     As right and wrong, pride and fall turn all at once unreal.</br>
@@ -116,6 +116,7 @@
                     Emperor of Jin. In 279 AD, Jin conquered Wu and unified China, which marked the end of the Three Kingdoms period.</p>
             </div>
         </article>
+        <graph></graph>
         <aside class="legend">
             <ul>
                 <li class="h3 li wei">Wei</li>
@@ -131,6 +132,59 @@
         I am a footer
     </footer>
     <script src="scripts/main.js"></script>
+    <script src="scripts/d3.js"></script>
+    <script>
+        // Add nodes
+        let nodes = [];
+        d3.csv("dataset/count-1-120.csv", function(error, csvdata) {
+            if (error) {
+                console.log('error');
+            }
+
+            for (let i = 0; i < csvdata.length; i++) {
+                let name = csvdata[i].name;
+                let count = csvdata[i].count;
+                nodes[i] = {
+                    "name": name,
+                    "count": count
+                };
+            }
+        });
+
+        // Add edges
+        let edges = [];
+
+        d3.csv("dataset/graph-1-120.csv", function(error, csvdata) {
+            if (error) {
+                console.log('error');
+            }
+
+            for (let i = 0; i < csvdata.length; i++) {
+                let source = csvdata[i].p1;
+                let target = csvdata[i].p2;
+                let weight = csvdata[i].count
+
+                edges[i] = {
+                    "source": source,
+                    "target": target,
+                    "weight": weight
+                };
+            }
+        });
+
+        // Layout
+        let force = d3.layout.force()
+            .nodes(nodes)
+            .links(edges)
+            .size([1000, 1000])
+            .linkDistance(300)
+            .charge([-1000]);
+
+        force.start();
+
+        console.log(nodes);
+        console.log(edges);
+    </script>
 </body>
 
 </html>
