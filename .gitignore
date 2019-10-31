@@ -20,7 +20,7 @@ parts/
 sdist/
 var/
 wheels/
-data/
+# data/
 save/
 *.egg-info/
 .installed.cfg
@@ -94,7 +94,6 @@ parts/
 sdist/
 var/
 wheels/
-data/
 save/
 *.egg-info/
 .installed.cfg

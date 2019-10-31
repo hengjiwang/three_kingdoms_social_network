@@ -41,7 +41,12 @@ main {
 }
 
 main article {
-    flex: 5
+    flex: 1;
+    text-align: left;
+}
+
+main graph {
+    flex: 4;
 }
 
 main aside {
@@ -93,6 +98,10 @@ main aside ul li:hover {
     font-weight: bold;
     font-style: italic;
     transform: scale(1.2, 1.2);
+}
+
+.profile {
+    width
 }
 
 footer {
