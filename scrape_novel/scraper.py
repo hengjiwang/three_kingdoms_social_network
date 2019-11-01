@@ -53,12 +53,15 @@ if __name__ == "__main__":
     for j in tqdm(range(len(chapters))):
         start, end = chapters[j]
         graph, count = build_graph("https://www.threekingdoms.com/", valid_names, start, end)
-        header = ['p1', 'p2', 'count']
-        df_graph = pd.DataFrame(columns=header, data=graph)
-        df_graph.to_csv('./data/graph-' + str(start) + '-' + str(end) + '.csv', index = False)
+        # header = ['p1', 'p2', 'count']
+        # df_graph = pd.DataFrame(columns=header, data=graph)
+        # df_graph.to_csv('./data/graph-' + str(start) + '-' + str(end) + '.csv', index = False)
+        df_graph = pd.DataFrame(graph, columns=['source', 'target', 'weight'])
+        df_graph.to_json('./data/graph-' + str(start) + '-' + str(end) + '.json', orient='records')
 
         header2 = ['name', 'count']
-        df_count = pd.DataFrame(columns=header2, data=count)
-        df_count.to_csv('./data/count-' + str(start) + '-' + str(end) + '.csv', index = False)
-    
+        # df_count = pd.DataFrame(columns=header2, data=count)
+        # df_count.to_csv('./data/count-' + str(start) + '-' + str(end) + '.csv', index = False)
+        df_count = pd.DataFrame(count, columns=['name', 'count'])
+        df_count.to_json('./data/count-' + str(start) + '-' + str(end) + '.json', orient='records')
 
