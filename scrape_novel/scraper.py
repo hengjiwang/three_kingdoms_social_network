@@ -44,7 +44,32 @@ def build_graph(base_url, valid_names, start_chapter=1, end_chapter=120):
 
     return res1, res2
 
-    
+def add_images(count):
+
+    nodes = []
+
+    for node in count:
+        name = node[0]
+        value = node[1]
+        new_name = name.split(' ')
+        new_name = [x.lower() for x in new_name]
+        new_name = '-'.join(new_name)
+        if new_name == 'zhao-zilong':
+            new_name = 'zhao-yun-(young)'
+
+        if new_name == 'xiahou-dun':
+            new_name = 'xiahou-dun-(patch)'
+
+        if new_name in ['cao-cao', 'deng-ai', 'gan-ning', 
+        'guan-yu', 'huang-zhong', 'jiang-wei', 'liu-bei', 'lu-bu', 
+        'lu-meng', 'lu-xun', 'ma-chao', 'sima-yi', 'sun-ce', 'sun-quan',
+        'xu-huang', 'xun-yu', 'zhang-fei', 'zhang-he', 'zhang-liao', 'zhou-yu',
+        'zhuge-liang']:
+            new_name = new_name + '-(young)'
+
+        nodes.append((name, value, new_name+'.jpg'))
+
+    return nodes
 
 
 if __name__ == "__main__":
@@ -53,9 +78,10 @@ if __name__ == "__main__":
     for j in tqdm(range(len(chapters))):
         start, end = chapters[j]
         graph, count = build_graph("https://www.threekingdoms.com/", valid_names, start, end)
+        nodes = add_images(count)
         # Save edges
         df_graph = pd.DataFrame(graph, columns=['source', 'target', 'weight'])
         df_graph.to_json('./data/graph-' + str(start) + '-' + str(end) + '.json', orient='records')
         # Save nodes
-        df_count = pd.DataFrame(count, columns=['name', 'count'])
+        df_count = pd.DataFrame(nodes, columns=['name', 'count', 'image'])
         df_count.to_json('./data/count-' + str(start) + '-' + str(end) + '.json', orient='records')

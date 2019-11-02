@@ -86,6 +86,15 @@ function makeGraph(nodes, edges) {
     // Filter people
     nodes = nodes.slice(0, 50);
 
+    // Normalize counts
+    let maxCount = nodes[0].count;
+    let minCount = nodes[nodes.length - 1].count
+
+    for (let j = 0; j < nodes.length; j++) {
+        nodes[j].count = 5 + 80 * Math.pow(nodes[j].count - minCount, 0.7) / Math.pow(maxCount - minCount, 0.7);
+    }
+
+
     // Add hashmap
 
     let hashmap = {}
@@ -108,13 +117,20 @@ function makeGraph(nodes, edges) {
 
     edges = new_edges;
 
+    // Normalize edge weights
+    let maxWeight = edges[0].weight;
+    let minWeight = edges[edges.length - 1].weight;
+    for (let j = 0; j < edges.length; j++) {
+        edges[j].weight = 10 * (edges[j].weight - minWeight) / (maxWeight - minWeight);
+    }
+
     // Layout
     let force = d3.layout.force()
         .nodes(nodes)
         .links(edges)
         .size([1000, 1000])
         .linkDistance(function(l) {
-            return 1 / (l.weight + 200) * 60000;
+            return 1 / (l.weight + 100) * 30000;
         })
         .charge([-300])
 
@@ -130,7 +146,7 @@ function makeGraph(nodes, edges) {
         .append("line")
         .style("stroke", "#ccc")
         .style("stroke-width", function(d) {
-            return d.weight / 5;
+            return d.weight;
         });
 
     // Add nodes
@@ -139,25 +155,45 @@ function makeGraph(nodes, edges) {
         .enter()
         .append("circle")
         .attr("r", function(d) {
-            return 5 + d.count / 20;
+            return d.count;
         })
+        //Add avatars
         .style("fill", function(d, i) {
-            return color(i);
+
+            let img_w = d.count * 2;
+            let img_h = d.count * 2;
+
+            let defs = svg.append("defs").attr("id", "imgdefs")
+
+            let catpattern = defs.append("pattern")
+                .attr("id", "catpattern" + i)
+                .attr("height", 1)
+                .attr("width", 1)
+
+            catpattern.append("image")
+                .attr("x", -(img_w / 2 - d.count))
+                .attr("y", -(img_h / 2 - d.count))
+                .attr("width", img_w)
+                .attr("height", img_h)
+                .attr("xlink:href", 'images/avatars/' + d.image)
+
+            return "url(#catpattern" + i + ")";
+
         })
         .call(force.drag);
 
-    // Add texts
-    let svgTexts = svg.selectAll("text")
-        .data(nodes)
-        .enter()
-        .append("text")
-        .style("fill", "black")
-        .style("font-size", "10px")
-        .attr("dx", 0)
-        .attr("dy", 0)
-        .text(function(d) {
-            return d.name;
-        });
+    // // Add texts
+    // let svgTexts = svg.selectAll("text")
+    //     .data(nodes)
+    //     .enter()
+    //     .append("text")
+    //     .style("fill", "black")
+    //     .style("font-size", "10px")
+    //     .attr("dx", 0)
+    //     .attr("dy", 0)
+    //     .text(function(d) {
+    //         return d.name;
+    //     });
 
     // Update
     force.on("tick", function() {
@@ -175,19 +211,19 @@ function makeGraph(nodes, edges) {
             });
 
         svgNodes.attr("cx", function(d) {
-                d.x += (svgWidth / 2 - d.x) * 0.005;
+                // d.x += (svgWidth / 2 - d.x) * 0.001;
                 return d.x;
             })
             .attr("cy", function(d) {
-                d.y += (svgHeight / 2 - d.y) * 0.005;
+                // d.y += (svgHeight / 2 - d.y) * 0.001;
                 return d.y;
             });
 
-        svgTexts.attr("x", function(d) {
-                return d.x;
-            })
-            .attr("y", function(d) {
-                return d.y;
-            });
+        // svgTexts.attr("x", function(d) {
+        //         return d.x;
+        //     })
+        //     .attr("y", function(d) {
+        //         return d.y;
+        //     });
     });
 }
