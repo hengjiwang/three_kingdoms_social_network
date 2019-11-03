@@ -3,13 +3,26 @@ let profile = document.getElementById("profile");
 let profileItems = profile.getElementsByTagName("p");
 let profileTexts = [];
 let profileButton = document.getElementById("profile-button")
-let svgWidth = 900;
+let svgWidth = '100%';
 let svgHeight = 900;
 let svg = d3.select("graph")
     .append('svg')
     .attr('width', svgWidth)
     .attr('height', svgHeight)
 let color = d3.scale.category20();
+let tooltip = d3.select('body')
+    .append('div')
+    .style('position', 'absolute')
+    .style('z-index', '10')
+    .style('background-color', 'white')
+    // .style('width', '80px')
+    // .style('height', '20px')
+    // .style('text-align', 'center')
+    // .style('line-height', '20px')
+    .style('color', 'black')
+    .style('visibility', 'hidden')
+    .style('font-size', '12px')
+    .text('')
 
 // ------------------Profile-------------------------------
 
@@ -91,7 +104,7 @@ function makeGraph(nodes, edges) {
     let minCount = nodes[nodes.length - 1].count
 
     for (let j = 0; j < nodes.length; j++) {
-        nodes[j].count = 5 + 80 * Math.pow(nodes[j].count - minCount, 0.7) / Math.pow(maxCount - minCount, 0.7);
+        nodes[j].count = 10 + 40 * Math.pow(nodes[j].count - minCount, 0.6) / Math.pow(maxCount - minCount, 0.6);
     }
 
 
@@ -130,9 +143,29 @@ function makeGraph(nodes, edges) {
         .links(edges)
         .size([1000, 1000])
         .linkDistance(function(l) {
-            return 1 / (l.weight + 100) * 30000;
+            if (l.source.faction == l.target.faction) {
+                if (l.source.faction != 'Other') {
+                    return 200
+                } else {
+                    return 300
+                }
+            } else {
+                return 300
+            }
         })
-        .charge([-300])
+        // .linkStrength(function(l) {
+        //     if (l.source.faction == l.target.faction) {
+        //         if (l.source.faction != 'Other') {
+        //             return 2.0
+        //         } else {
+        //             return 0.1
+        //         }
+        //     } else {
+        //         return 0.1
+        //     }
+        // })
+        .friction(0)
+        .charge([-100])
 
     force.start();
 
@@ -157,8 +190,36 @@ function makeGraph(nodes, edges) {
         .attr("r", function(d) {
             return d.count;
         })
+        .style("stroke", function(d) {
+            if (d.faction == 'Wei') {
+                return "blue";
+            } else if (d.faction == 'Shu') {
+                return "green";
+            } else if (d.faction == 'Wu') {
+                return "red";
+            } else if (d.faction == 'Jin') {
+                return "purple";
+            } else {
+                return "gray";
+            }
+        })
+        .style("stroke-width", 4)
         //Add avatars
         .style("fill", function(d, i) {
+
+            if (d.image == "undefined") {
+                if (d.faction == 'Wei') {
+                    return "blue";
+                } else if (d.faction == 'Shu') {
+                    return "green";
+                } else if (d.faction == 'Wu') {
+                    return "red";
+                } else if (d.faction == 'Jin') {
+                    return "purple";
+                } else {
+                    return "gray";
+                }
+            }
 
             let img_w = d.count * 2;
             let img_h = d.count * 2;
@@ -180,20 +241,16 @@ function makeGraph(nodes, edges) {
             return "url(#catpattern" + i + ")";
 
         })
+        .on("mouseover", function(d, i) {
+            return tooltip.style('visibility', 'visible').text(d.name);
+        })
+        .on('mousemove', function(d, i) {
+            return tooltip.style('top', (event.pageY - 10) + 'px').style('left', (event.pageX + 10) + 'px')
+        })
+        .on('mouseout', function(d, i) {
+            return tooltip.style('visibility', 'hidden')
+        })
         .call(force.drag);
-
-    // // Add texts
-    // let svgTexts = svg.selectAll("text")
-    //     .data(nodes)
-    //     .enter()
-    //     .append("text")
-    //     .style("fill", "black")
-    //     .style("font-size", "10px")
-    //     .attr("dx", 0)
-    //     .attr("dy", 0)
-    //     .text(function(d) {
-    //         return d.name;
-    //     });
 
     // Update
     force.on("tick", function() {
@@ -218,12 +275,5 @@ function makeGraph(nodes, edges) {
                 // d.y += (svgHeight / 2 - d.y) * 0.001;
                 return d.y;
             });
-
-        // svgTexts.attr("x", function(d) {
-        //         return d.x;
-        //     })
-        //     .attr("y", function(d) {
-        //         return d.y;
-        //     });
     });
 }
