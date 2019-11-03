@@ -9,11 +9,12 @@
     <link rel="shortcut icon" href="images/sanguo.ico" type="image/x-icon">
     <!-- <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet"> -->
     <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <script type='text/javascript' src='scripts/d3.js'></script>
 </head>
 
 <body>
     <header>
-        <h1>Romance of Three Kingdoms Social Network</h1>
+        <h1><em>Romance of Three Kingdoms</em> Social Network</h1>
         <nav>
             <div class="select period">
                 <label for="period">Period: </label>
@@ -31,9 +32,9 @@
                 </select>
             </div>
 
-            <div id="profile-button" class='profile'>
+            <!-- <div id="profile-button" class='profile'>
                 <button type="button">Profile</button>
-            </div>
+            </div> -->
 
             <div class="select people">
                 <label for="people">People: </label>
@@ -55,7 +56,7 @@
                 <optgroup label="Other">
                     <option>Dong Zhuo</option>
                 </optgroup>
-            </datalist>
+                </datalist>
             </div>
         </nav>
     </header>
@@ -116,75 +117,15 @@
                     Emperor of Jin. In 279 AD, Jin conquered Wu and unified China, which marked the end of the Three Kingdoms period.</p>
             </div>
         </article>
+        <aside></aside>
         <graph></graph>
-        <aside class="legend">
-            <ul>
-                <li class="h3 li wei">Wei</li>
-                <li class="h3 li shu">Shu</li>
-                <li class="h3 li wu">Wu</li>
-                <li class="h3 li jin">Jin</li>
-                <li class="h3 li other">Other</li>
-            </ul>
-        </aside>
     </main>
 
     <footer>
         I am a footer
     </footer>
     <script src="scripts/main.js"></script>
-    <script src="scripts/d3.js"></script>
-    <script>
-        // Add nodes
-        let nodes = [];
-        d3.csv("dataset/count-1-120.csv", function(error, csvdata) {
-            if (error) {
-                console.log('error');
-            }
-
-            for (let i = 0; i < csvdata.length; i++) {
-                let name = csvdata[i].name;
-                let count = csvdata[i].count;
-                nodes[i] = {
-                    "name": name,
-                    "count": count
-                };
-            }
-        });
-
-        // Add edges
-        let edges = [];
-
-        d3.csv("dataset/graph-1-120.csv", function(error, csvdata) {
-            if (error) {
-                console.log('error');
-            }
-
-            for (let i = 0; i < csvdata.length; i++) {
-                let source = csvdata[i].p1;
-                let target = csvdata[i].p2;
-                let weight = csvdata[i].count
-
-                edges[i] = {
-                    "source": source,
-                    "target": target,
-                    "weight": weight
-                };
-            }
-        });
-
-        // Layout
-        let force = d3.layout.force()
-            .nodes(nodes)
-            .links(edges)
-            .size([1000, 1000])
-            .linkDistance(300)
-            .charge([-1000]);
-
-        force.start();
-
-        console.log(nodes);
-        console.log(edges);
-    </script>
+    <script src="scripts/aside.js"></script>
 </body>
 
 </html>
