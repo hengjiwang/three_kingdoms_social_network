@@ -313,4 +313,30 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+# added by yue
 .DS_Store
+BrowserMetrics-spare.pma
+CertificateRevocation/
+Default/
+FileTypePolicies/
+First Run
+InterventionPolicyDatabase/
+Local State
+MEIPreload/
+NativeMessagingHosts/
+OriginTrials/
+PepperFlash/
+RunningChromeVersion
+SSLErrorAssistant/
+Safe Browsing/
+Safe Browsing Cookies
+Safe Browsing Cookies-journal
+SafetyTips/
+ShaderCache/
+SingletonCookie
+SingletonLock
+SingletonSocket
+Subresource Filter/
+WidevineCdm/
+__pycache__/
+pnacl/
