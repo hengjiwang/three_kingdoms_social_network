@@ -61,6 +61,8 @@ def find_name(p):
             x = 'Guan Luo'
         if x == 'Zhang Lian':
             x = 'Zhang Liang'
+        if x == 'Liu Chan':
+            x = 'Liu Shan'
 
         names.add(x)   
         all_names.append(x)
