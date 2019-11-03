@@ -104,7 +104,7 @@ function makeGraph(nodes, edges) {
     let minCount = nodes[nodes.length - 1].count
 
     for (let j = 0; j < nodes.length; j++) {
-        nodes[j].count = 10 + 40 * Math.pow(nodes[j].count - minCount, 0.6) / Math.pow(maxCount - minCount, 0.6);
+        nodes[j].count = 15 + 45 * Math.pow(nodes[j].count - minCount, 0.6) / Math.pow(maxCount - minCount, 0.6);
     }
 
 
@@ -147,10 +147,10 @@ function makeGraph(nodes, edges) {
                 if (l.source.faction != 'Other') {
                     return 200
                 } else {
-                    return 300
+                    return 350
                 }
             } else {
-                return 300
+                return 350
             }
         })
         // .linkStrength(function(l) {
