@@ -54,7 +54,7 @@ period.onchange = function() {
     console.log(edgePath)
 
     // Rebuild canvas
-    svg = d3.select("svg")
+    svg = d3.select("graph").select("svg")
     svg.remove()
     svg = d3.select("graph")
         .append('svg')
