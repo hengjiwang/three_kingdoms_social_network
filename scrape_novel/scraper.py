@@ -45,7 +45,7 @@ def build_graph(base_url, valid_names, start_chapter=1, end_chapter=120):
     return res1, res2
 
 def add_images(count):
-
+    # Add images to nodes
     nodes = []
 
     for node in count:
@@ -64,13 +64,33 @@ def add_images(count):
         'guan-yu', 'huang-zhong', 'jiang-wei', 'liu-bei', 'lu-bu', 
         'lu-meng', 'lu-xun', 'ma-chao', 'sima-yi', 'sun-ce', 'sun-quan',
         'xu-huang', 'xun-yu', 'zhang-fei', 'zhang-he', 'zhang-liao', 'zhou-yu',
-        'zhuge-liang']:
+        'zhuge-liang', 'zhao-yun']:
             new_name = new_name + '-(young)'
 
-        nodes.append((name, value, new_name+'.jpg'))
+        if not os.path.exists('image/' + new_name + '.jpg'):
+            nodes.append((name, value, 'undefined'))
+        else:   
+            nodes.append((name, value, new_name+'.jpg'))
 
     return nodes
 
+def add_faction(nodes):
+    # Add factions to nodes
+
+    people = pd.read_csv('data/people.csv')
+
+    for j in range(len(nodes)):
+        node = nodes[j]
+        name = node[0]
+        faction = people[people.name_en==name].url.values
+        if len(faction) == 0:
+            nodes[j] = (node[0], node[1], node[2], 'Other')
+        else:
+            nodes[j] = (node[0], node[1], node[2], faction[0])
+    
+    return nodes
+
+        
 
 if __name__ == "__main__":
     valid_names = load_table("./data/people.csv")
@@ -79,9 +99,12 @@ if __name__ == "__main__":
         start, end = chapters[j]
         graph, count = build_graph("https://www.threekingdoms.com/", valid_names, start, end)
         nodes = add_images(count)
+
+        nodes = add_faction(nodes)
+
         # Save edges
         df_graph = pd.DataFrame(graph, columns=['source', 'target', 'weight'])
         df_graph.to_json('./data/graph-' + str(start) + '-' + str(end) + '.json', orient='records')
         # Save nodes
-        df_count = pd.DataFrame(nodes, columns=['name', 'count', 'image'])
+        df_count = pd.DataFrame(nodes, columns=['name', 'count', 'image', 'faction'])
         df_count.to_json('./data/count-' + str(start) + '-' + str(end) + '.json', orient='records')
