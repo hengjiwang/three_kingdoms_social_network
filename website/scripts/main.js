@@ -3,7 +3,7 @@ let profile = document.getElementById("profile");
 let profileItems = profile.getElementsByTagName("p");
 let profileTexts = [];
 let profileButton = document.getElementById("profile-button")
-let svgWidth = 900;
+let svgWidth = '100%';
 let svgHeight = 900;
 let svg = d3.select("graph")
     .append('svg')
