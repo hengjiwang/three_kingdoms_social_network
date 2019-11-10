@@ -16,7 +16,7 @@ def load_table(people_file):
     df = pd.read_csv(people_file)
     lnames = df['name_en'].values
     new_names = np.array(['Emperor Xian', 'Diao Chan', 'Yue Jing', 'Zhang Ba', 'Zhang Jue', 'Zhang Lian',
-    'Zhao Zilong', 'Lu Bu', 'Lu Meng', 'Lu Qian', 'Hu Ban', 'Gao Ding', 'Zhou Cang', 'The Emperor'])
+    'Zhao Zilong', 'Lu Bu', 'Lu Meng', 'Lu Qian', 'Hu Ban', 'Gao Ding', 'Zhou Cang', 'The Emperor', 'Later Ruler'])
     lnames = np.concatenate((lnames, new_names))
     for name in lnames:  names[name] = True
 
@@ -61,7 +61,7 @@ def find_name(p):
             x = 'Guan Luo'
         if x == 'Zhang Lian':
             x = 'Zhang Liang'
-        if x == 'Liu Chan':
+        if x == 'Latter Ruler':
             x = 'Liu Shan'
 
         names.add(x)   
